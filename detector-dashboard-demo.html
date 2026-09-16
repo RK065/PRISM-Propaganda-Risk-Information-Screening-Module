@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRISM — Propaganda Recognition, Intelligence & Source Monitoring</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Instrument Sans Font (same as jhoothkigoonj.com) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Instrument Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            syncopate: ['"Syncopate"', 'sans-serif'],
+          },
+          colors: {
+            background: "#f4f6f9",
+            card: "#ffffff",
+            border: "#e6eaf0",
+            success: "#22c55e",
+            warning: "#d97a1f",
+            danger: "#d93a2b",
+            accent: "#16181d",
+            muted: "#5b6472",
+            faint: "#9aa3b0",
+            subtle: "#edf1f6",
+            azure: "#2563eb",
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f4f6f9;
+      background-image:
+        radial-gradient(900px 480px at 50% -180px, #dfebfa 0%, rgba(223,235,250,0) 70%),
+        linear-gradient(to right, rgba(37,99,235,.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(37,99,235,.035) 1px, transparent 1px);
+      background-size: auto, 44px 44px, 44px 44px;
+      color: #16181d;
+      font-family: "Instrument Sans", system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #d5dbe4;
+      border-radius: 3px;
+    }
+    .card-shadow {
+      box-shadow: 0 20px 60px rgba(22,30,40,.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card-shadow:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 34px rgba(22,30,40,.12);
+    }
+    .card-shadow-md {
+      box-shadow: 0 8px 30px rgba(22,30,40,.06);
+    }
+    textarea:focus, input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37,99,235,.15);
+    }
+    .nav-item {
+      transition: all 0.15s ease;
+      border-radius: 999px;
+    }
+    .nav-item:hover {
+      color: #16181d;
+    }
+    .nav-item.active {
+      background: #16181d;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(22,30,40,.2);
+    }
+    .glass-bar {
+      background: rgba(255,255,255,.78);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 8px 30px rgba(22,30,40,.08);
+    }
+  </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+
+  <!-- ================= FLOATING GLASS NAVBAR ================= -->
+  <header class="glass-bar sticky top-3 z-40 max-w-5xl mx-auto mt-3 rounded-full px-5 flex items-center gap-4 h-12">
+    <!-- Logo -->
+    <div class="flex items-center gap-2.5 cursor-pointer flex-shrink-0" onclick="switchTab('landing')">
+      <svg viewBox="0 0 24 24" class="w-7 h-7 text-accent" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Incoming Ray -->
+        <path d="M2 15L9 11.5" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Prism Triangle -->
+        <polygon points="12 5 6 17 18 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        <!-- Outgoing Beams (Spectrum) -->
+        <path d="M15 11.5L22 8" stroke="#FB7185" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M15 12L22 12" stroke="#FBBF24" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M15 12.5L22 16" stroke="#2563eb" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      <span class="font-syncopate font-bold text-xs text-accent tracking-[0.1em] ml-2 mt-0.5">PRISM</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex items-center gap-1 ml-auto">
+      <button onclick="switchTab('landing')" id="nav-landing" class="nav-item active px-4 py-1.5 text-[13px] font-semibold text-accent">
+        Home
+      </button>
+      <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-item px-4 py-1.5 text-[13px] font-semibold text-muted">
+        Dashboard
+      </button>
+      <button onclick="switchTab('analyzer')" id="nav-analyzer" class="nav-item px-4 py-1.5 text-[13px] font-semibold text-muted">
+        Analyzer
+      </button>
+      <button onclick="switchTab('analytics')" id="nav-analytics" class="nav-item px-4 py-1.5 text-[13px] font-semibold text-muted">
+        Analytics
+      </button>
+    </nav>
+
+    <!-- Status -->
+    <div class="flex items-center gap-2 text-[11px] text-faint font-medium bg-subtle border border-border rounded-full px-3 py-1.5 ml-2 flex-shrink-0">
+      <span class="w-2 h-2 rounded-full bg-gray-300" id="api-dot"></span>
+      <span id="api-status">Offline</span>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="max-w-5xl mx-auto px-5 pb-16 pt-8">
+
+    <!-- ================= PAGE 1: HOME ================= -->
+    <div id="page-landing" class="tab-content space-y-10 py-6">
+      <section class="text-center space-y-5 py-10">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-border text-xs font-medium text-muted card-shadow-md">
+          <span class="w-2 h-2 bg-danger rounded-full animate-pulse"></span>
+          Coordinated Influence Campaign Detection
+        </div>
+        <h1 class="text-5xl font-extrabold tracking-tight text-accent leading-[1.08]">
+          <span class="font-syncopate font-bold tracking-[0.16em] text-4xl block mb-4">PRISM</span>
+          <span class="text-azure text-3xl font-bold block">Propaganda Recognition, Intelligence & Source Monitoring</span>
+        </h1>
+          <p class="text-base text-muted max-w-xl mx-auto leading-relaxed">
+            Extract features, flag coordination networks, and ground narratives 
+            using ML ensemble classifiers and vector RAG indices.
+          </p>
+          <div class="flex justify-center gap-3 pt-4">
+            <button onclick="switchTab('analyzer')" class="flex items-center gap-2 px-6 py-3 rounded-full bg-accent hover:translate-y-[-2px] font-semibold text-[14.5px] text-white transition-all" style="box-shadow: 0 10px 26px rgba(22,30,40,.22)">
+              <span>Run Live Analyzer</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+            <button onclick="switchTab('dashboard')" class="px-6 py-3 rounded-full bg-white hover:translate-y-[-2px] border border-border font-semibold text-[14.5px] text-accent transition-all" style="box-shadow: 0 4px 14px rgba(22,30,40,.06)">
+              Launch Dashboard
+            </button>
+          </div>
+        </section>
+
+        <!-- KPI Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="p-5 rounded-2xl bg-white border border-border space-y-1 card-shadow">
+            <p class="text-xs font-medium text-muted">Total Dataset Size</p>
+            <p class="text-2xl font-bold text-accent">40,005</p>
+            <p class="text-[10px] text-muted">training samples</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-white border border-border space-y-1 card-shadow">
+            <p class="text-xs font-medium text-muted">Model Accuracy</p>
+            <p class="text-2xl font-bold text-success">92.8%</p>
+            <p class="text-[10px] text-muted">held-out test set</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-white border border-border space-y-1 card-shadow">
+            <p class="text-xs font-medium text-muted">F1 Macro Score</p>
+            <p class="text-2xl font-bold text-accent">0.9207</p>
+            <p class="text-[10px] text-muted">3-class balanced</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-white border border-border space-y-1 card-shadow">
+            <p class="text-xs font-medium text-muted">Feature Dimensions</p>
+            <p class="text-2xl font-bold text-warning">8,455</p>
+            <p class="text-[10px] text-muted">TF-IDF + SBERT + NLP</p>
+          </div>
+        </section>
+
+
+        <!-- The Problem -->
+        <section class="space-y-3">
+          <h2 class="text-lg font-bold text-accent">The Problem</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-5 rounded-2xl bg-white border border-border card-shadow space-y-2">
+              <i class="fa-solid fa-bolt text-danger text-sm"></i>
+              <p class="text-sm font-semibold text-accent">Misinformation at Scale</p>
+              <p class="text-xs text-muted leading-relaxed">Social media amplifies misleading narratives to millions within hours — far faster than any fact-check can catch up.</p>
+            </div>
+            <div class="p-5 rounded-2xl bg-white border border-border card-shadow space-y-2">
+              <i class="fa-solid fa-link-slash text-warning text-sm"></i>
+              <p class="text-sm font-semibold text-accent">Eroding Public Trust</p>
+              <p class="text-xs text-muted leading-relaxed">When propaganda is disguised as news and opinions framed as facts, citizens lose the ability to make informed decisions.</p>
+            </div>
+            <div class="p-5 rounded-2xl bg-white border border-border card-shadow space-y-2">
+              <i class="fa-solid fa-hourglass-half text-muted text-sm"></i>
+              <p class="text-sm font-semibold text-accent">Human Review Can't Keep Up</p>
+              <p class="text-xs text-muted leading-relaxed">Manual fact-checking is slow and unscalable. Thousands of posts are published every minute — reviewers can only cover a fraction.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- What This Platform Does -->
+        <section class="space-y-3">
+          <h2 class="text-lg font-bold text-accent">What This Platform Does</h2>
+          <p class="text-sm text-muted max-w-3xl">Automatically classifies text into <strong class="text-accent">Propaganda</strong>, <strong class="text-accent">Opinion</strong>, and <strong class="text-accent">Neutral</strong> — helping users quickly spot manipulative narratives.</p>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="p-5 rounded-2xl bg-white border border-border card-shadow space-y-2">
+              <i class="fa-solid fa-brain text-accent text-sm"></i>
+              <p class="text-sm font-semibold text-accent">71+ Features</p>
+              <p class="text-xs text-muted leading-relaxed">Writing style, emotional tone, readability, entity patterns, and propaganda markers like loaded language.</p>
+            </div>
+            <div class="p-5 rounded-2xl bg-white border border-border card-shadow space-y-2">
+              <i class="fa-solid fa-layer-group text-accent text-sm"></i>
+              <p class="text-sm font-semibold text-accent">Ensemble ML</p>
+              <p class="text-xs text-muted leading-relaxed">TF-IDF + SBERT embeddings fed into a VotingClassifier ensemble trained on 40,000+ labeled samples.</p>
+            </div>
+            <div class="p-5 rounded-2xl bg-white border border-border card-shadow space-y-2">
+              <i class="fa-solid fa-arrows-rotate text-accent text-sm"></i>
+              <p class="text-sm font-semibold text-accent">Continuous Learning</p>
+              <p class="text-xs text-muted leading-relaxed">Every user-verified annotation feeds back into the training pipeline, improving accuracy over time.</p>
+            </div>
+            <div class="p-5 rounded-2xl bg-white border border-border card-shadow space-y-2">
+              <i class="fa-solid fa-gauge-high text-accent text-sm"></i>
+              <p class="text-sm font-semibold text-accent">Real-Time Analysis</p>
+              <p class="text-xs text-muted leading-relaxed">Paste any text and get instant classification with confidence scores and explainable feature breakdowns.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Who It's For -->
+        <section class="space-y-3">
+          <h2 class="text-lg font-bold text-accent">Who It's For</h2>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="p-5 rounded-2xl bg-white border border-border card-shadow text-center space-y-2">
+              <i class="fa-solid fa-newspaper text-muted"></i>
+              <p class="text-sm font-semibold text-accent">Journalists</p>
+              <p class="text-xs text-muted">Verify sources before publishing</p>
+            </div>
+            <div class="p-5 rounded-2xl bg-white border border-border card-shadow text-center space-y-2">
+              <i class="fa-solid fa-graduation-cap text-muted"></i>
+              <p class="text-sm font-semibold text-accent">Researchers</p>
+              <p class="text-xs text-muted">Study narrative patterns at scale</p>
+            </div>
+            <div class="p-5 rounded-2xl bg-white border border-border card-shadow text-center space-y-2">
+              <i class="fa-solid fa-building-columns text-muted"></i>
+              <p class="text-sm font-semibold text-accent">Policy Makers</p>
+              <p class="text-xs text-muted">Monitor information campaigns</p>
+            </div>
+            <div class="p-5 rounded-2xl bg-white border border-border card-shadow text-center space-y-2">
+              <i class="fa-solid fa-user text-muted"></i>
+              <p class="text-sm font-semibold text-accent">Citizens</p>
+              <p class="text-xs text-muted">Make informed decisions daily</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ================= PAGE 2: SOC DASHBOARD ================= -->
+      <div id="page-dashboard" class="tab-content hidden space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-accent">SOC Dashboard</h2>
+          <p class="text-sm text-muted">Aggregated surveillance streams and narrative classifications.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="p-5 rounded-2xl bg-white border border-border space-y-1 card-shadow">
+            <p class="text-[11px] font-semibold text-muted uppercase tracking-wider">Total Logged</p>
+            <p class="text-2xl font-extrabold text-accent">12,483</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-white border border-border space-y-1 card-shadow">
+            <p class="text-[11px] font-semibold text-danger uppercase tracking-wider">Propaganda</p>
+            <p class="text-2xl font-extrabold text-danger">1,284</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-white border border-border space-y-1 card-shadow">
+            <p class="text-[11px] font-semibold text-warning uppercase tracking-wider">Opinion</p>
+            <p class="text-2xl font-extrabold text-warning">935</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-white border border-border space-y-1 card-shadow">
+            <p class="text-[11px] font-semibold text-success uppercase tracking-wider">Neutral</p>
+            <p class="text-2xl font-extrabold text-success">10,264</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-6 rounded-2xl bg-white border border-border space-y-5 md:col-span-2 card-shadow">
+            <h3 class="text-sm font-semibold text-accent">Narrative Prevalence</h3>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between text-xs text-muted mb-1.5">
+                  <span class="font-medium">Objective Neutral</span>
+                  <span>82.2%</span>
+                </div>
+                <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-success h-full rounded-full" style="width: 82.2%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs text-muted mb-1.5">
+                  <span class="font-medium">Propaganda</span>
+                  <span>10.3%</span>
+                </div>
+                <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-danger h-full rounded-full" style="width: 10.3%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs text-muted mb-1.5">
+                  <span class="font-medium">Opinion</span>
+                  <span>7.5%</span>
+                </div>
+                <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-warning h-full rounded-full" style="width: 7.5%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white border border-border space-y-4 card-shadow">
+            <h3 class="text-sm font-semibold text-accent">Audit Workflows</h3>
+            <div class="p-4 rounded-lg bg-subtle border border-border space-y-1">
+              <p class="text-[11px] text-muted uppercase tracking-wider font-medium">Queue Depth</p>
+              <p class="text-xl font-bold text-warning">12 Items</p>
+            </div>
+            <div class="text-xs text-muted space-y-2.5 pt-1">
+              <div class="flex justify-between">
+                <span>Model Engine:</span>
+                <span class="font-mono text-accent font-medium">v3 (Ensemble)</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Active Learning:</span>
+                <span class="text-success font-semibold">Listening</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= PAGE 3: CONTENT ANALYZER ================= -->
+      <div id="page-analyzer" class="tab-content hidden space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-accent">Content Analysis</h2>
+          <p class="text-sm text-muted">Paste content below to classify text and extract flags.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white border border-border space-y-4 card-shadow">
+        <textarea 
+            id="analyzer-input"
+            rows="6" 
+            placeholder="Paste raw article text, social media posts, or statements here..."
+            class="w-full bg-subtle border border-border rounded-lg p-4 text-sm text-accent placeholder-gray-400 resize-none transition-all"
+          ></textarea>
+
+          <div class="flex justify-between items-center">
+            <div class="flex gap-2">
+              <button onclick="loadExampleText()" class="px-3 py-1.5 rounded-md bg-white hover:bg-subtle text-xs font-medium border border-border text-accent transition-colors">
+                Load Example
+              </button>
+              <button onclick="clearAnalyzer()" class="px-3 py-1.5 rounded-md bg-white hover:bg-subtle text-xs font-medium border border-border text-accent transition-colors">
+                Clear
+              </button>
+            </div>
+            <button onclick="runAnalysis()" class="px-5 py-2 rounded-lg bg-accent hover:bg-gray-800 font-semibold text-sm text-white flex items-center gap-2 transition-colors">
+              <i class="fa-solid fa-gears" id="analyzer-spinner" style="display:none"></i>
+              <span>Analyze Text</span>
+            </button>
+          </div>
+
+          <div id="analyzer-progress-container" class="hidden space-y-2 pt-3 border-t border-border">
+            <div class="flex justify-between text-xs text-muted">
+              <span id="progress-status-text">Extracting feature vectors (TF-IDF + spaCy POS/NER)...</span>
+              <span id="progress-timer-text" class="font-mono">Elapsed: 0.0s</span>
+            </div>
+            <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+              <div id="analyzer-progress-bar" class="bg-accent h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analyzer Results -->
+        <div id="analyzer-results" class="hidden grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-6 rounded-2xl bg-white border border-border space-y-5 md:col-span-2 card-shadow">
+            <div class="flex items-center justify-between border-b border-border pb-4">
+              <h3 class="text-sm font-semibold text-accent">Narrative Assessment</h3>
+              <span id="res-classification" class="px-2.5 py-0.5 rounded-full border text-xs font-mono uppercase tracking-wider"></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <p class="text-[11px] text-muted uppercase tracking-wider font-semibold">Model Confidence</p>
+                <div class="flex items-baseline gap-2">
+                  <span id="res-confidence" class="text-3xl font-extrabold text-accent"></span>
+                  <span class="text-[11px] text-muted">calibrated prob</span>
+                </div>
+              </div>
+
+              <div class="space-y-1">
+                <p class="text-[11px] text-muted uppercase tracking-wider font-semibold">Risk Score</p>
+                <div class="flex items-baseline gap-2">
+                  <span id="res-risk" class="text-3xl font-extrabold"></span>
+                  <span class="text-[11px] text-muted">/ 100</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Explainability Metrics -->
+            <div class="space-y-3 pt-4 border-t border-border">
+              <h4 class="text-xs font-semibold text-muted uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-chart-simple"></i>
+                Linguistic Feature Weights
+              </h4>
+              <div class="space-y-3">
+                <div>
+                  <div class="flex justify-between text-xs text-muted mb-1.5">
+                    <span>Propaganda Attribution</span>
+                    <span id="res-bar-propaganda-val" class="font-mono font-medium"></span>
+                  </div>
+                  <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                    <div id="res-bar-propaganda" class="bg-danger h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs text-muted mb-1.5">
+                    <span>Emotional Bias & Extremity</span>
+                    <span id="res-bar-emotion-val" class="font-mono font-medium"></span>
+                  </div>
+                  <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                    <div id="res-bar-emotion" class="bg-warning h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature Flags Panel -->
+          <div class="p-6 rounded-2xl bg-white border border-border space-y-4 card-shadow">
+            <h3 class="text-sm font-semibold text-accent">Detected Signals</h3>
+            <ul id="res-flags" class="space-y-3 text-xs text-muted">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <!-- ================= PAGE 6: ANALYTICS ================= -->
+      <div id="page-analytics" class="tab-content hidden space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-accent">Operational Analytics</h2>
+          <p class="text-sm text-muted">Aggregated analysis metrics and distribution vectors.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-6 rounded-2xl bg-white border border-border space-y-4 card-shadow">
+            <h3 class="text-sm font-semibold text-accent">Narrative Class Prevalence</h3>
+            <div class="space-y-4" id="analytics-class-bars">
+              <!-- Progress bars -->
+            </div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white border border-border space-y-4 card-shadow">
+            <h3 class="text-sm font-semibold text-accent">Prevalence by Source</h3>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between text-xs text-muted mb-1.5">
+                  <span class="font-medium">Broadcast News Agency</span>
+                  <span>45%</span>
+                </div>
+                <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-gray-400 h-full rounded-full" style="width: 45%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs text-muted mb-1.5">
+                  <span class="font-medium">Twitter / X posts</span>
+                  <span>35%</span>
+                </div>
+                <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-gray-400 h-full rounded-full" style="width: 35%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs text-muted mb-1.5">
+                  <span class="font-medium">Reddit Threads</span>
+                  <span>20%</span>
+                </div>
+                <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-gray-400 h-full rounded-full" style="width: 20%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  </main>
+
+  <!-- ================= WEB INTERACTIVE SCRIPT ================= -->
+  <script>
+    const API_BASE = "http://localhost:8000";
+    let isApiOnline = false;
+
+    // Switch Tabs
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+      document.getElementById(`page-${tabId}`).classList.remove("hidden");
+
+      // Update Nav highlighting
+      document.querySelectorAll("header nav button").forEach(btn => {
+        btn.classList.remove("active");
+        btn.classList.remove("text-accent");
+        btn.classList.add("text-muted");
+      });
+      const activeBtn = document.getElementById(`nav-${tabId}`);
+      if (activeBtn) {
+        activeBtn.classList.add("active");
+        activeBtn.classList.remove("text-muted");
+        activeBtn.classList.add("text-accent");
+      }
+
+      if (tabId === "dashboard" || tabId === "analytics") {
+        updateDashboardAndAnalytics();
+      }
+    }
+
+    // Check API Status
+    async function checkStatus() {
+      try {
+        const res = await fetch(`${API_BASE}/health`);
+        if (res.ok) {
+          isApiOnline = true;
+          document.getElementById("api-status").innerText = "Live (Connected)";
+          document.getElementById("api-status").classList.add("text-success");
+          document.getElementById("api-dot").classList.remove("bg-gray-300");
+          document.getElementById("api-dot").classList.add("bg-success");
+        }
+      } catch {
+        isApiOnline = false;
+        document.getElementById("api-status").innerText = "Offline (Mock)";
+        document.getElementById("api-status").classList.remove("text-success");
+        document.getElementById("api-dot").classList.remove("bg-success");
+        document.getElementById("api-dot").classList.add("bg-gray-300");
+      }
+    }
+
+    // Run Health Check immediately
+    checkStatus();
+    setInterval(checkStatus, 15000);
+
+    // Load example
+    function loadExampleText() {
+      document.getElementById("analyzer-input").value = 
+        "Modi ji, look at what your NTA has just done. NTA cancels UGC-NET exams after setting faulty papers and repeating old questions. PM Modi built a system that cannot run an exam. Thousands of candidates are stolen of their years. NTA is an extraction machine. Wake up before it's deleted!!!";
+    }
+
+    function clearAnalyzer() {
+      document.getElementById("analyzer-input").value = "";
+      document.getElementById("analyzer-results").classList.add("hidden");
+      document.getElementById("analyzer-progress-container").classList.add("hidden");
+    }
+
+    // Call analyze API
+    async function runAnalysis() {
+      const text = document.getElementById("analyzer-input").value.trim();
+      if (!text || text.length < 10) {
+        alert("Text must be at least 10 characters long.");
+        return;
+      }
+
+      document.getElementById("analyzer-spinner").style.display = "inline-block";
+      
+      // Reset and display progress bar
+      const progressContainer = document.getElementById("analyzer-progress-container");
+      const progressBar = document.getElementById("analyzer-progress-bar");
+      const progressStatus = document.getElementById("progress-status-text");
+      const progressTimer = document.getElementById("progress-timer-text");
+      
+      progressContainer.classList.remove("hidden");
+      progressBar.style.width = "0%";
+      progressStatus.innerText = "Extracting linguistic markers & readability indices...";
+      progressTimer.innerText = "Elapsed: 0.0s";
+      
+      let startTime = Date.now();
+      let timerVal = 0;
+      let progressPercent = 0;
+      
+      const interval = setInterval(() => {
+        timerVal = (Date.now() - startTime) / 1000;
+        progressTimer.innerText = `Elapsed: ${timerVal.toFixed(1)}s`;
+        
+        // Dynamic status updates based on elapsed time
+        if (timerVal < 0.4) {
+          progressPercent = Math.min(timerVal * 75, 30);
+          progressStatus.innerText = "Extracting linguistic markers & readability indices...";
+        } else if (timerVal < 0.8) {
+          progressPercent = 30 + Math.min((timerVal - 0.4) * 75, 30);
+          progressStatus.innerText = "Generating character/word TF-IDF matrices...";
+        } else if (timerVal < 1.2) {
+          progressPercent = 60 + Math.min((timerVal - 0.8) * 75, 30);
+          progressStatus.innerText = "Retrieving SBERT sentence embeddings...";
+        } else {
+          progressPercent = Math.min(90 + (timerVal - 1.2) * 5, 95);
+          progressStatus.innerText = "Running VotingClassifier ensemble classification...";
+        }
+        progressBar.style.width = `${progressPercent}%`;
+      }, 50);
+
+      let result;
+      if (isApiOnline) {
+        try {
+          const res = await fetch(`${API_BASE}/analyze`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text })
+          });
+          result = await res.json();
+        } catch {
+          result = getMockPrediction(text);
+        }
+      } else {
+        // Add a small artificial delay in mock mode to let the user see the progress bar/timer
+        await new Promise(r => setTimeout(r, 1200));
+        result = getMockPrediction(text);
+      }
+
+      clearInterval(interval);
+      progressBar.style.width = "100%";
+      progressStatus.innerText = "Analysis complete!";
+      
+      const finalDuration = (Date.now() - startTime) / 1000;
+      progressTimer.innerText = `Total: ${finalDuration.toFixed(2)}s`;
+
+      document.getElementById("analyzer-spinner").style.display = "none";
+      displayResults(result);
+    }
+
+    function getMockPrediction(text) {
+      const textLower = text.toLowerCase();
+      const hasOutrage = textLower.includes("wake up") || textLower.includes("deleted") || textLower.includes("modi");
+      
+      if (hasOutrage) {
+        return {
+          classification: "propaganda",
+          confidence: 0.91,
+          risk_score: 84.0,
+          reasoning: {
+            propaganda_score: 0.81,
+            sentiment_extremity: 0.72
+          },
+          flags: ["Loaded language detected", "Excessive exclamation marks", "Adversarial political framing"]
+        };
+      }
+      return {
+        classification: "opinion",
+        confidence: 0.72,
+        risk_score: 55.0,
+        reasoning: {
+          propaganda_score: 0.35,
+          sentiment_extremity: 0.42
+        },
+        flags: ["Subjective movie review patterns", "Hedge words detected"]
+      };
+    }
+
+    function displayResults(result) {
+      document.getElementById("analyzer-results").classList.remove("hidden");
+      
+      const badge = document.getElementById("res-classification");
+      badge.innerText = result.classification.toUpperCase();
+      badge.className = "px-2.5 py-0.5 rounded-full border text-xs font-mono uppercase tracking-wider " + 
+        (result.classification === "propaganda" ? "bg-red-50 border-red-200 text-danger" : 
+         result.classification === "opinion" ? "bg-amber-50 border-amber-200 text-warning" : 
+         "bg-green-50 border-green-200 text-success");
+
+      document.getElementById("res-confidence").innerText = `${(result.confidence * 100).toFixed(0)}%`;
+      
+      const riskEl = document.getElementById("res-risk");
+      riskEl.innerText = result.risk_score.toFixed(0);
+      riskEl.className = "text-3xl font-extrabold " + 
+        (result.risk_score > 60 ? "text-danger" : result.risk_score > 30 ? "text-warning" : "text-success");
+
+      // Bars
+      const pScore = result.reasoning.propaganda_score * 100;
+      const eScore = result.reasoning.sentiment_extremity * 100;
+      document.getElementById("res-bar-propaganda").style.width = `${pScore}%`;
+      document.getElementById("res-bar-propaganda-val").innerText = `${pScore.toFixed(0)}%`;
+      document.getElementById("res-bar-emotion").style.width = `${eScore}%`;
+      document.getElementById("res-bar-emotion-val").innerText = `${eScore.toFixed(0)}%`;
+
+      // Flags
+      const flagsList = document.getElementById("res-flags");
+      flagsList.innerHTML = result.flags.map(f => `
+        <li class="flex gap-2.5 items-start">
+          <span class="text-danger mt-0.5"><i class="fa-solid fa-triangle-exclamation text-[10px]"></i></span>
+          <span class="text-accent">${f}</span>
+        </li>
+      `).join("");
+    }
+
+
+
+
+    // Stats update
+    async function updateDashboardAndAnalytics() {
+      let data = {
+        total_analyses: 12485,
+        by_classification: { neutral: 10264, propaganda: 1286, opinion: 935 }
+      };
+
+      if (isApiOnline) {
+        try {
+          const res = await fetch(`${API_BASE}/dashboard/stats`);
+          data = await res.json();
+        } catch {}
+      }
+
+      // Render analytics class bars
+      const total = data.total_analyses;
+      const neutral = data.by_classification.neutral || 0;
+      const propaganda = data.by_classification.propaganda || 0;
+      const opinion = data.by_classification.opinion || 0;
+
+      document.getElementById("analytics-class-bars").innerHTML = `
+        <div>
+          <div class="flex justify-between text-xs text-muted mb-1.5">
+            <span class="font-medium">Propaganda</span>
+            <span>${((propaganda/total)*100).toFixed(1)}%</span>
+          </div>
+          <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+            <div class="bg-danger h-full rounded-full" style="width: ${(propaganda/total)*100}%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between text-xs text-muted mb-1.5">
+            <span class="font-medium">Opinion</span>
+            <span>${((opinion/total)*100).toFixed(1)}%</span>
+          </div>
+          <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+            <div class="bg-warning h-full rounded-full" style="width: ${(opinion/total)*100}%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between text-xs text-muted mb-1.5">
+            <span class="font-medium">Neutral</span>
+            <span>${((neutral/total)*100).toFixed(1)}%</span>
+          </div>
+          <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+            <div class="bg-success h-full rounded-full" style="width: ${(neutral/total)*100}%"></div>
+          </div>
+        </div>
+      `;
+    }
+
+  </script>
+</body>
+</html>

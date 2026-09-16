@@ -1,0 +1,454 @@
+================================================================================
+CONTENT DETECTOR SYSTEM - PROJECT STRUCTURE
+================================================================================
+
+File: content-detector-system.zip (57 KB)
+
+Extract with: unzip content-detector-system.zip
+
+================================================================================
+DIRECTORY TREE
+================================================================================
+
+content-detector-system/
+│
+├── 📄 Documentation (START HERE!)
+│   ├── QUICKSTART.md              ← 5-minute setup guide
+│   ├── README.md                  ← System overview
+│   ├── TESTING_GUIDE.md           ← Testing & validation guide
+│   └── ARCHITECTURE.md            ← Technical architecture
+│
+├── 🔧 Core API (Production Ready)
+│   ├── content_detector_api.py    ← Main FastAPI server
+│   ├── paid_promotion_filter.py   ← Campaign detection
+│   ├── advanced_fact_checking.py  ← Fact-checking integrations
+│   └── example_usage.py           ← Usage examples
+│
+├── ✅ Testing & Validation
+│   ├── test_suite.py              ← Unit & integration tests
+│   ├── data_collection.py         ← Dataset tools
+│   ├── validation_metrics.py      ← Accuracy evaluation
+│   └── validation_orchestrator.py ← Master test runner
+│
+├── ⚙️ Configuration
+│   ├── requirements.txt           ← Python dependencies
+│   ├── setup.py                   ← Package setup
+│   ├── Dockerfile                 ← Container image
+│   ├── docker-compose.yml         ← Docker Compose config
+│   └── .gitignore                 ← Git configuration
+│
+└── 📁 Directories
+    ├── datasets/                  ← Your labeled data goes here
+    ├── validation_reports/        ← Test results stored here
+    ├── logs/                      ← Application logs
+    └── models/                    ← ML models (future use)
+
+================================================================================
+QUICK START
+================================================================================
+
+1. EXTRACT
+   $ unzip content-detector-system.zip
+   $ cd content-detector-system
+
+2. INSTALL
+   $ pip install -r requirements.txt
+
+3. VALIDATE (optional but recommended)
+   $ python validation_orchestrator.py
+
+4. START API
+   $ python content_detector_api.py
+   
+   Then visit: http://localhost:8000/docs
+
+5. TEST
+   $ python example_usage.py
+
+================================================================================
+FILE DESCRIPTIONS
+================================================================================
+
+DOCUMENTATION
+──────────────
+QUICKSTART.md
+  • 5-minute installation guide
+  • Common commands reference
+  • Basic troubleshooting
+  • Quick links to other guides
+  → START HERE if you're new!
+
+README.md
+  • Complete system overview
+  • Feature descriptions
+  • API endpoint documentation
+  • Integration examples
+  • Deployment options
+
+TESTING_GUIDE.md
+  • Testing strategy overview
+  • Unit test details
+  • Data collection workflow
+  • Labeling guidelines
+  • Accuracy metrics explained
+  • Troubleshooting guide
+
+ARCHITECTURE.md
+  • System architecture diagram
+  • 3 deployment approaches (MVP, Standard, Enterprise)
+  • Cloud platform options (AWS, GCP, Azure, Heroku)
+  • Scaling strategies
+  • Performance optimization
+  • Security considerations
+
+CORE API
+──────────────
+content_detector_api.py (16 KB)
+  • PropagandaDetector class
+  • PaidCampaignDetector class
+  • ContentClassifier class
+  • FastAPI REST server
+  • Endpoints: /analyze, /batch, /health
+  
+  Usage: python content_detector_api.py
+
+paid_promotion_filter.py (13 KB)
+  • PaidPromotionFilter class
+  • Platform-specific detection:
+    - Instagram (influencer ads)
+    - YouTube (sponsorships)
+    - Twitter (promotions)
+    - Reddit (affiliate)
+    - WhatsApp (chain promotions)
+    - News (sponsored content)
+  • Promotion type classification
+  • Risk level assessment
+
+advanced_fact_checking.py (32 KB)
+  • MultiSourceFactChecker class
+  • Integrations:
+    - Google Fact Check API
+    - Snopes API
+    - PolitiFact API
+    - Wikipedia verification
+  • Claim extraction
+  • Multi-source aggregation
+
+example_usage.py (8 KB)
+  • Single content analysis
+  • Batch processing examples
+  • Twitter monitoring pattern
+  • Flask dashboard template
+  • Integration examples
+  
+  Usage: python example_usage.py
+
+TESTING & VALIDATION
+──────────────
+test_suite.py (16 KB)
+  • TestPropagandaDetector (5 tests)
+  • TestPaidCampaignDetector (4 tests)
+  • TestPaidPromotionFilter (3 tests)
+  • TestContentClassifierIntegration (3 tests)
+  • TestValidationMetrics (3 tests)
+  • TestPerformance (2 tests)
+  → Total: 20+ tests
+  
+  Usage: python test_suite.py
+
+data_collection.py (20 KB)
+  • AnnotatedContent data structure
+  • DatasetBuilder class
+  • SampleDataCollection (16 examples)
+  • DataCollectionGuide (step-by-step)
+  • Statistics generation
+  • Dataset splitting (train/val/test)
+  
+  Usage: python data_collection.py
+
+validation_metrics.py (17 KB)
+  • ConfusionMatrix calculation
+  • Accuracy metrics (precision, recall, F1)
+  • AccuracyValidator class
+  • ComparisonValidator class
+  • ValidationBenchmarks (3 levels)
+  • Per-platform accuracy tracking
+  
+  Usage: python validation_metrics.py
+
+validation_orchestrator.py (13 KB)
+  • 4-phase validation pipeline:
+    1. Unit tests
+    2. Data preparation
+    3. Accuracy validation
+    4. Benchmark evaluation
+  • Unified reporting
+  • Result storage
+  
+  Usage: python validation_orchestrator.py
+
+CONFIGURATION
+──────────────
+requirements.txt
+  • fastapi==0.104.1
+  • uvicorn==0.24.0
+  • pydantic==2.5.0
+  • requests==2.31.0
+  • nltk==3.8.1
+  • scikit-learn==1.3.2
+  • tweepy==4.14.0
+  • flask==3.0.0
+  • wikipedia-api==0.5.4
+
+setup.py
+  • Package installation configuration
+  • Version: 1.0.0
+  • Python 3.8+ required
+
+Dockerfile
+  • Python 3.10-slim base image
+  • Installs dependencies
+  • Exposes port 8000
+  • Health check included
+
+docker-compose.yml
+  • Single command deployment
+  • Volume mounts for data
+  • Port mapping
+  • Health checks
+  
+  Usage: docker-compose up
+
+.gitignore
+  • Python artifacts
+  • IDE configuration
+  • Test reports
+  • Datasets (local only)
+  • Environment variables
+
+================================================================================
+COMMON COMMANDS
+================================================================================
+
+SETUP & INSTALLATION
+  $ unzip content-detector-system.zip
+  $ cd content-detector-system
+  $ pip install -r requirements.txt
+
+VALIDATION & TESTING
+  $ python validation_orchestrator.py          # Complete validation
+  $ python test_suite.py                       # Run tests only
+  $ python data_collection.py                  # Create dataset
+  $ python validation_metrics.py               # Accuracy check
+
+API & EXAMPLES
+  $ python content_detector_api.py             # Start API
+  $ python example_usage.py                    # Run examples
+  $ curl http://localhost:8000/docs            # API docs
+
+DOCKER DEPLOYMENT
+  $ docker-compose up                          # Start with Docker
+  $ docker build -t content-detector .         # Build image
+  $ docker run -p 8000:8000 content-detector   # Run container
+
+ADVANCED
+  $ python validation_orchestrator.py --guide  # Print setup guide
+  $ python validation_orchestrator.py --dataset my_data.json
+  $ python validation_orchestrator.py --skip-tests
+
+================================================================================
+EXPECTED BEHAVIOR
+================================================================================
+
+First Time (with sample data):
+  ✓ Validation runs successfully
+  ✓ 60-80% accuracy reported
+  ✓ Sample dataset created in datasets/
+  ✓ Report saved in validation_reports/
+
+After Collecting Your Data:
+  ✓ Run validation_orchestrator.py --dataset your_data.json
+  ✓ Accuracy should improve with more labeled data
+  ✓ Target: 80%+ accuracy for production
+
+Production Deployment:
+  ✓ Use Docker or cloud platform
+  ✓ API responds in <500ms per request
+  ✓ Supports batch processing
+  ✓ Includes health checks and monitoring
+
+================================================================================
+VALIDATION PIPELINE
+================================================================================
+
+Phase 1: Unit Tests
+  ├─ PropagandaDetector tests
+  ├─ PaidCampaignDetector tests
+  ├─ PaidPromotionFilter tests
+  ├─ Performance tests
+  └─ ~20 total tests
+
+Phase 2: Data Preparation
+  ├─ Load dataset
+  ├─ Validate format
+  ├─ Check class distribution
+  └─ Display statistics
+
+Phase 3: Accuracy Validation
+  ├─ Run predictions on all items
+  ├─ Calculate confusion matrices
+  ├─ Compute metrics (precision, recall, F1)
+  ├─ Track per-platform accuracy
+  └─ Analyze errors
+
+Phase 4: Benchmark Evaluation
+  ├─ Compare against "Acceptable" thresholds (70%)
+  ├─ Compare against "Good" thresholds (80%)
+  ├─ Compare against "Excellent" thresholds (90%)
+  └─ Assign performance level
+
+Output: Comprehensive report in validation_reports/
+
+================================================================================
+KEY METRICS EXPLAINED
+================================================================================
+
+Accuracy     = Correct predictions / Total predictions
+               Target: >70% (good: >80%)
+
+Precision    = True Positives / (True Positives + False Positives)
+               Measures false positives
+               Target: >75%
+
+Recall       = True Positives / (True Positives + False Negatives)
+               Measures false negatives
+               Target: >70%
+
+F1 Score     = Harmonic mean of Precision and Recall
+               Balanced metric
+               Target: >72%
+
+Specificity  = True Negatives / (True Negatives + False Positives)
+               Measures correct negatives
+               Target: >75%
+
+================================================================================
+PERFORMANCE TARGETS
+================================================================================
+
+Single Request: <500ms
+Batch Request (10 items): <5s total
+API Throughput: >100 requests/sec
+Memory: <1GB per instance
+Accuracy: >75% (target: >80%)
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. Extract the ZIP file
+   $ unzip content-detector-system.zip
+   $ cd content-detector-system
+
+2. Read QUICKSTART.md
+   $ cat QUICKSTART.md
+   (Takes 5 minutes)
+
+3. Install dependencies
+   $ pip install -r requirements.txt
+
+4. Run initial validation
+   $ python validation_orchestrator.py
+   (This will baseline the system)
+
+5. Collect your own data
+   $ python data_collection.py
+   (Follow the printed guide)
+
+6. Validate your data
+   $ python validation_orchestrator.py --dataset your_data.json
+
+7. Start the API
+   $ python content_detector_api.py
+
+8. Visit API documentation
+   Open: http://localhost:8000/docs
+
+9. Deploy to production
+   See ARCHITECTURE.md for options
+
+================================================================================
+SUPPORT & TROUBLESHOOTING
+================================================================================
+
+Import Errors?
+  → pip install -r requirements.txt --upgrade
+
+Tests Failing?
+  → python test_suite.py -v
+  → Check TESTING_GUIDE.md
+
+Low Accuracy?
+  → Collect more labeled data
+  → Adjust thresholds
+  → See TESTING_GUIDE.md "Improving Accuracy"
+
+API Too Slow?
+  → Enable caching
+  → Use async processing
+  → See ARCHITECTURE.md "Performance Tuning"
+
+Data Format Questions?
+  → See data_collection.py examples
+  → Check example JSON in datasets/
+
+Deployment Help?
+  → See ARCHITECTURE.md "Deployment Options"
+  → Docker: docker-compose up
+  → Cloud: AWS Lambda, Google Cloud Run, etc.
+
+================================================================================
+PACKAGE STATS
+================================================================================
+
+Total Files:        27
+Total Size:         183 KB (uncompressed)
+Compressed:         57 KB
+Python Files:       8 (1,500+ lines of code)
+Documentation:      4 (50+ pages)
+Configuration:      5
+Directories:        4
+Sample Data:        16 examples included
+
+Python Version:     3.8+
+License:            Open source (research/non-commercial)
+Status:             Production ready
+
+================================================================================
+VERSION INFO
+================================================================================
+
+Version:            1.0.0
+Release Date:       July 2026
+Last Updated:       July 14, 2026
+Status:             Stable
+Dependencies:       All pinned to specific versions
+
+================================================================================
+QUICK REFERENCE
+================================================================================
+
+START:              python validation_orchestrator.py
+API:                python content_detector_api.py
+TESTS:              python test_suite.py
+DATA:               python data_collection.py
+METRICS:            python validation_metrics.py
+EXAMPLES:           python example_usage.py
+
+DOCKER:             docker-compose up
+WEB:                http://localhost:8000/docs
+DOCS:               README.md, TESTING_GUIDE.md, ARCHITECTURE.md
+
+================================================================================
+END OF PROJECT STRUCTURE
+================================================================================

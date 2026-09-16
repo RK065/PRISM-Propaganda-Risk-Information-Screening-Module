@@ -1,0 +1,64 @@
+# Operating System
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Archives & Databases
+*.zip
+*.tar.gz
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+*$py.class
+*.so
+.Python
+**/.venv/
+**/venv/
+**/env/
+**/ENV/
+build/
+dist/
+*.egg-info/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Node / Next.js
+**/node_modules/
+**/.next/
+**/.turbo/
+**/out/
+**/.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment & Secrets
+**/.env
+**/.env*.local
+**/.env.local
+
+# IDEs
+.idea/
+.vscode/
+
+# Project Specific Large Files & Artifacts
+content-detector-system/datasets/*
+!content-detector-system/datasets/.gitkeep
+content-detector-system/models/*
+!content-detector-system/models/.gitkeep
+content-detector-system/logs/*
+!content-detector-system/logs/.gitkeep
+content-detector-system/validation_reports/*
+!content-detector-system/validation_reports/.gitkeep
+content-detector-system/test_report.json
