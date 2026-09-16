@@ -4,9 +4,9 @@
 
 This is a complete, production-ready system for detecting propaganda and paid campaigns in social media content.
 
-## 📦 Package Contents
+##  Package Contents
 
-### 📄 Documentation (4 files)
+#### Documentation (4 files)
 
 ```
 QUICKSTART.md          - Start here! 5-minute setup guide
@@ -15,7 +15,7 @@ TESTING_GUIDE.md       - Testing strategy and data labeling guide
 ARCHITECTURE.md        - Technical architecture and deployment options
 ```
 
-### 🔧 Core API (4 files)
+###  Core API (4 files)
 
 ```
 content_detector_api.py        - Main API with propaganda & campaign detectors
@@ -24,7 +24,7 @@ advanced_fact_checking.py      - Fact-checking integrations (Google, Snopes, etc
 example_usage.py               - Usage examples and integration patterns
 ```
 
-### ✅ Testing & Validation (4 files)
+###  Testing & Validation (4 files)
 
 ```
 test_suite.py              - Unit, integration, and performance tests
@@ -33,7 +33,7 @@ validation_metrics.py      - Accuracy evaluation and metrics calculation
 validation_orchestrator.py - Master validation runner (runs everything)
 ```
 
-### ⚙️ Configuration (4 files)
+###  Configuration (4 files)
 
 ```
 requirements.txt      - Python dependencies
@@ -43,7 +43,7 @@ docker-compose.yml   - Docker Compose configuration for easy deployment
 .gitignore          - Git configuration
 ```
 
-### 📁 Directories (4 folders)
+###  Directories (4 folders)
 
 ```
 datasets/               - Store your labeled datasets here
@@ -52,7 +52,7 @@ logs/                  - Application logs
 models/                - ML models (for future use)
 ```
 
-## 🚀 Quick Start (3 Steps)
+## Quick Start (3 Steps)
 
 ### 1. Extract and Install
 
@@ -91,7 +91,7 @@ python content_detector_api.py
 
 Then visit: http://localhost:8000/docs
 
-## 📊 File Manifest
+## File Manifest
 
 | File | Size | Type | Purpose |
 |------|------|------|---------|
@@ -114,7 +114,7 @@ Then visit: http://localhost:8000/docs
 | .gitignore | 641 B | Config | Git configuration |
 | **TOTAL** | **183 KB** | | Complete system |
 
-## 🎯 What Each File Does
+##  What Each File Does
 
 ### Documentation Files
 
@@ -211,7 +211,7 @@ Then visit: http://localhost:8000/docs
 - Benchmark evaluation
 - Unified reporting
 
-## 💻 System Requirements
+##  System Requirements
 
 **Minimum:**
 - Python 3.8+
@@ -224,7 +224,7 @@ Then visit: http://localhost:8000/docs
 - 2 GB disk space
 - Linux or macOS
 
-## 📦 Dependencies Included
+##  Dependencies Included
 
 See `requirements.txt`:
 ```
@@ -239,7 +239,7 @@ flask==3.0.0
 wikipedia-api==0.5.4
 ```
 
-## 🔄 Typical Workflow
+##  Typical Workflow
 
 ```
 1. Extract ZIP
@@ -268,7 +268,7 @@ wikipedia-api==0.5.4
    (Docker or cloud)
 ```
 
-## 📈 Expected Accuracy
+##  Expected Accuracy
 
 **With sample data (included):**
 - Overall Accuracy: 65-75%
@@ -282,7 +282,7 @@ wikipedia-api==0.5.4
 - Campaign Detection: 75-85%
 - Neutral Detection: 90%+
 
-## 🐳 Docker Deployment
+##  Docker Deployment
 
 ```bash
 # Using docker-compose (easiest)
@@ -293,7 +293,7 @@ docker build -t content-detector .
 docker run -p 8000:8000 content-detector
 ```
 
-## 📊 Key Metrics
+##  Key Metrics
 
 The system provides:
 - **Accuracy** - Overall correctness
@@ -304,7 +304,7 @@ The system provides:
 - **Risk Score** - 0-100 severity scale
 - **Confidence** - 0-1 prediction confidence
 
-## 🎯 Use Cases
+##  Use Cases
 
 1. **Content Moderation** - Flag problematic posts
 2. **Ad Verification** - Detect undisclosed ads
@@ -312,7 +312,7 @@ The system provides:
 4. **Research** - Analyze disinformation patterns
 5. **Policy Compliance** - Meet advertising disclosure requirements
 
-## ✅ Pre-Deployment Checklist
+## Pre-Deployment Checklist
 
 - [ ] Extracted ZIP file
 - [ ] Installed dependencies: `pip install -r requirements.txt`
@@ -325,7 +325,7 @@ The system provides:
 - [ ] Configured for your deployment environment
 - [ ] Set up monitoring/logging
 
-## 📞 Support
+## Support
 
 **For each component:**
 
@@ -338,7 +338,7 @@ The system provides:
 | Data labeling | See data_collection.py --guide |
 | Deployment | See ARCHITECTURE.md "Deployment Options" |
 
-## 🚀 Next Steps
+##  Next Steps
 
 1. **Extract the ZIP**
    ```bash
@@ -365,18 +365,18 @@ The system provides:
 5. **Visit the API docs**
    - http://localhost:8000/docs
 
-## 📄 License
+##  License
 
 Open source for research and non-commercial use.
 
-## 🎉 You're Ready!
+##  You're Ready!
 
 This complete package includes everything needed to:
-- ✅ Detect propaganda in social media content
-- ✅ Identify paid campaigns and ads
-- ✅ Validate accuracy with your own data
-- ✅ Deploy to production
-- ✅ Monitor and improve over time
+-  Detect propaganda in social media content
+-  Identify paid campaigns and ads
+-  Validate accuracy with your own data
+-  Deploy to production
+-  Monitor and improve over time
 
 **Start with QUICKSTART.md and follow the 5-minute setup!**
 
