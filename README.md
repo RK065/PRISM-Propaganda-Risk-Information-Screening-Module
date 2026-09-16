@@ -2,7 +2,7 @@
 
 A full-stack intelligence platform for analyzing social media posts, detecting propaganda vs. paid promotional campaigns, and verifying factual claims.
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 ├── content-detector-system/    # Backend FastAPI engine, ML classification & fact-checking
@@ -20,7 +20,7 @@ A full-stack intelligence platform for analyzing social media posts, detecting p
 └── detector-dashboard-demo.html# Interactive standalone HTML dashboard preview
 ```
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### 1. Backend Setup (FastAPI)
 
@@ -42,6 +42,6 @@ npm run dev
 ```
 The UI application will run on `http://localhost:3000`.
 
-## 🛡️ License
+##  License
 
 MIT License
